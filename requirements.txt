@@ -1,0 +1,5 @@
+python3=3.13
+fastapi[standard]
+uvicorn
+python-dotenv
+openai
