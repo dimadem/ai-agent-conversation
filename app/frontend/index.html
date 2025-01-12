@@ -3,12 +3,41 @@
 <head>
     <title>chat</title>
     <style>
+        .html, body {
+            margin: 0;
+            padding: 0;
+            font-size: 16px;
+            width: 100vw;
+            background-color: #ababab;
+        }
         .recording { 
             background-color: #ff0000;
             animation: pulse 1s infinite;
         }
-        .message-text { color: #000; }
-        .message-voice { color: #0066cc; }
+        .chat-container {
+            display: flex;
+            width: 100vw;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        .input-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+        .message-text { 
+            color: #000;
+            width: 90vw; 
+        }
+        .message-voice { 
+            color: #0066cc; 
+            width: 90vw;
+        }
         @keyframes pulse {
             0% { opacity: 1; }
             50% { opacity: 0.5; }
@@ -34,24 +63,26 @@
 <body>
     <div class="chat-container">
         <div id="messages"></div>
-        <form onsubmit="sendMessage(event)">
-            <input type="text" id="messageText" autocomplete="off"/>
-            <button type="submit">Отправить текст</button>
-        </form>
-        <div class="audio-controls">
-            <button id="recordButton" onclick="toggleRecording()">Начать запись</button>
-            <span id="recordingStatus"></span>
+        <div class="input-container">
+            <form onsubmit="sendMessage(event)">
+                <input type="text" id="messageText" autocomplete="off"/>
+                <button type="submit">Отправить текст</button>
+            </form>
+            <div class="audio-controls">
+                <button id="recordButton" onclick="toggleRecording()">Записать голос</button>
+                <span id="recordingStatus"></span>
+            </div>
         </div>
     </div>
     
     <script>
-        const wsChat = new WebSocket("ws://localhost:8000/ws/text");
+        const wsText = new WebSocket("ws://localhost:8000/ws/text");
         const wsVoice = new WebSocket("ws://localhost:8000/ws/voice");
         let mediaRecorder;
         let audioChunks = [];
         let isRecording = false;
 
-        wsChat.onmessage = function(event) {
+        wsText.onmessage = function(event) {
             const response = JSON.parse(event.data);
             addMessageToChat(response.user_input_text, 'user_input_text');
             addMessageToChat(response.agent_response_text, 'agent_response_text');
@@ -69,7 +100,7 @@
             // Воспроизводим полученное аудио
             const audio = new Audio();
             audio.src = 'data:audio/mp3;base64,' + response.agent_response_audio;
-            audio.play().catch(e => console.error('Ошибка воспроизведения:', e));
+            audio.play().catch(e => console.error('wsVoice:', e));
         };
 
         function addMessageToChat(text, type) {
@@ -78,12 +109,12 @@
             
             if (type === 'user_input_text') 
             {
-                message.textContent = '👤 ' + text;
+                message.textContent = '［👤］: ' + text;
                 message.className = 'message-text user-message';
             } 
             else if (type === 'agent_response_text') 
             {
-                message.textContent = '🤖 ' + text;
+                message.textContent = '［🤖］: ' + text;
                 message.className = 'message-text agent-message';
             }
             
@@ -94,7 +125,7 @@
         function sendMessage(event) {
             event.preventDefault();
             const input = document.getElementById("messageText");
-            wsChat.send(input.value);
+            wsText.send(input.value);
             input.value = '';
         }
 
@@ -124,20 +155,20 @@
 
                     mediaRecorder.start();
                     isRecording = true;
-                    recordButton.textContent = 'Остановить запись';
+                    recordButton.textContent = 'Stop';
                     recordButton.classList.add('recording');
-                    statusElement.textContent = 'Идет запись...';
+                    // statusElement.textContent = 'Recording...';
 
                 } catch (err) {
-                    console.error('Ошибка при записи:', err);
-                    statusElement.textContent = 'Ошибка доступа к микрофону';
+                    console.error('Record:', err);
+                    statusElement.textContent = 'Error mic access';
                 }
             } else {
                 mediaRecorder.stop();
                 isRecording = false;
-                recordButton.textContent = 'Начать запись';
+                recordButton.textContent = 'Записать голос';
                 recordButton.classList.remove('recording');
-                statusElement.textContent = 'Запись остановлена';
+                // statusElement.textContent = 'Stopped';
                 mediaRecorder.stream.getTracks().forEach(track => track.stop());
             }
         }

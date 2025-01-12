@@ -1,7 +1,7 @@
 # AI AGENT CONVERSATION
 
-## Софт
-(FASTAPI)[https://fastapi.tiangolo.com/]
+## Soft
+[FASTAPI](https://fastapi.tiangolo.com/)
 
 
 ### Setup

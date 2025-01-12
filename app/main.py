@@ -34,11 +34,14 @@ async def websocket_endpoint(ws: WebSocket):
             # Получаем текст от пользователя
             user_input = await ws.receive_text()
             pp(f"user_input: {user_input}")
+
             # Создаем сообщение для TTT
             message = ttt.create_chat_message("user", user_input)
+
             # Генерируем ответ через TTT
             agent_response = ttt.generate_response([message])
             pp(f"agent_response: {agent_response}")
+
             # Отправляем ответ пользоват
             await ws.send_json(
                 {
@@ -57,6 +60,7 @@ async def websocket_voice(ws: WebSocket):
         while True:
             # Получаем аудио от пользователя
             audio_data = await ws.receive_text()
+
             # Декодируем base64 в аудио
             audio_bytes = base64.b64decode(audio_data)
             

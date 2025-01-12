@@ -2,7 +2,7 @@ from typing import List, Dict
 from app.core.openai import client
 
 class TTT:
-    def __init__(self, model: str = "gpt-4o"):
+    def __init__(self, model: str = "gpt-4o-mini"):
         self.client = client
         self.model = model
 
