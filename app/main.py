@@ -33,7 +33,7 @@ async def websocket_endpoint(ws: WebSocket):
         while True:
             # Получаем текст от пользователя
             user_input = await ws.receive_text()
-            pp(f"user_input: {message}")
+            pp(f"user_input: {user_input}")
             # Создаем сообщение для TTT
             message = ttt.create_chat_message("user", user_input)
             # Генерируем ответ через TTT
