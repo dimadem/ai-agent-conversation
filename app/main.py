@@ -100,3 +100,27 @@ async def websocket_voice(ws: WebSocket):
             )
     except WebSocketDisconnect:
         pass
+
+
+@app.post("/api/evaluation")
+async def evaluate_endpoint(request: Request):
+    pp(f"=== Evaluation endpoint ===")
+    data = await request.json()
+    pp(data)
+
+    return "Evaluation endpoint"
+
+@app.post("/api/select-persona")
+async def select_persona_endpoint(request: Request):
+    pp(f"=== Select persona endpoint ===")
+    data = await request.json()
+    pp(data)
+    available_personas = ["Persona1", "Persona2", "Persona3"]
+    return {"message": "Select persona endpoint", "personas": available_personas}
+
+@app.post("/api/interview")
+async def interview_endpoint(request: Request):
+    pp(f"=== Interview endpoint ===")
+    data = await request.json()
+    pp(data)
+    return data

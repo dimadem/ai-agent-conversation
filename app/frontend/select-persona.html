@@ -38,7 +38,7 @@
 			const data = { experience, job_position, team_skill };
             
 			// Замените URL на актуальный endpoint вашего backend-а
-			fetch("/api/persona", {
+			fetch("/api/select-persona", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(data)

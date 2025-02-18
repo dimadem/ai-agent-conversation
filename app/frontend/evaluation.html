@@ -28,7 +28,7 @@
         try {
             var jsonData = JSON.parse(jsonText);
             // Отправка JSON на backend
-            fetch('/submit-evaluation', {
+            fetch('/api/evaluation', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(jsonData)
