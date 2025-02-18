@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-200 min-h-screen flex items-center justify-center font-sans">
+    <div class="w-full max-w-md p-6 bg-white rounded shadow">
+        <h1 class="text-2xl font-bold mb-4 text-center">Evaluation</h1>
+        <p class="mb-4 text-center">Welcome to the evaluation page. Please provide your JSON data below:</p>
+        <form id="evaluationForm" action="/submit-evaluation" method="post" class="space-y-4">
+            <div>
+                <label for="json-input" class="block mb-1">JSON Data:</label>
+                <textarea id="json-input" name="json-data" rows="10" cols="50" class="w-full p-2 border rounded"></textarea>
+            </div>
+            <div class="text-center">
+                <input type="submit" value="Submit" class="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600">
+            </div>
+        </form>
+    </div>
+    <script>
+    document.getElementById('evaluationForm').addEventListener('submit', function(event) 
+    {
+        event.preventDefault();
+        var jsonText = document.getElementById('json-input').value;
+        try {
+            var jsonData = JSON.parse(jsonText);
+            // Отправка JSON на backend
+            fetch('/submit-evaluation', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(jsonData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Success!');
+                document.getElementById('evaluationForm').reset();
+            })
+            .catch(error => {
+                alert('Error sending data. Please try again.');
+            });
+        } catch(e) {
+            alert('Invalid JSON: ' + e.message);
+        }
+    });
+    </script>
+</body>
+</html>

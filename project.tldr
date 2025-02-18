@@ -295,7 +295,7 @@
 			"props": {
 				"w": 632.5859375,
 				"h": 272.24327558097053,
-				"name": "Option"
+				"name": "index.html"
 			},
 			"parentId": "shape:umgdu6gyvwuk-cSBajouw",
 			"index": "a66ZU",
@@ -340,7 +340,7 @@
 				"dash": "draw",
 				"size": "m",
 				"fill": "none",
-				"color": "black",
+				"color": "yellow",
 				"labelColor": "black",
 				"bend": 0,
 				"start": {
@@ -380,8 +380,8 @@
 			"typeName": "binding"
 		},
 		{
-			"x": -1467.0515404806445,
-			"y": 1532.8001226144931,
+			"x": -1481.40481997326,
+			"y": 1456.434582664499,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -391,7 +391,7 @@
 			"props": {
 				"color": "black",
 				"size": "m",
-				"text": "Choose persona",
+				"text": "[page]\nChoose persona",
 				"font": "draw",
 				"align": "middle",
 				"verticalAlign": "middle",
@@ -406,8 +406,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": -1467.0515404806445,
-			"y": 1742.8001226144931,
+			"x": -1594.6654148677849,
+			"y": 1901.8940012602973,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -432,8 +432,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": -1467.0515404806445,
-			"y": 1952.8001226144931,
+			"x": -1594.6654148677849,
+			"y": 2111.894001260297,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -470,7 +470,7 @@
 				"dash": "draw",
 				"size": "m",
 				"fill": "none",
-				"color": "black",
+				"color": "yellow",
 				"labelColor": "black",
 				"bend": 0,
 				"start": {
@@ -737,7 +737,7 @@
 			"props": {
 				"color": "black",
 				"size": "m",
-				"text": "Dialoge process",
+				"text": "[page]\nDialoge process",
 				"font": "draw",
 				"align": "middle",
 				"verticalAlign": "middle",
@@ -821,8 +821,8 @@
 			"typeName": "binding"
 		},
 		{
-			"x": 310.39897262653744,
-			"y": 79.53972433779427,
+			"x": 256.8582077737142,
+			"y": 257.6674380865111,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -832,7 +832,7 @@
 			"props": {
 				"color": "light-green",
 				"size": "m",
-				"text": "{ \nexperience: confidense with 5 year\n}",
+				"text": "5 year",
 				"font": "draw",
 				"align": "middle",
 				"verticalAlign": "middle",
@@ -847,8 +847,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 310.39897262653744,
-			"y": 499.53972433779427,
+			"x": 256.8582077737142,
+			"y": 677.6674380865109,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -873,8 +873,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 310.39897262653744,
-			"y": 289.53972433779427,
+			"x": 256.8582077737142,
+			"y": 467.6674380865111,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -884,7 +884,7 @@
 			"props": {
 				"color": "light-green",
 				"size": "m",
-				"text": "java developer",
+				"text": "senior python developer",
 				"font": "draw",
 				"align": "middle",
 				"verticalAlign": "middle",
@@ -917,8 +917,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 573.657908159684,
-			"y": 286.6899823958124,
+			"x": 633.6030428296756,
+			"y": 471.9194293173273,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -1436,8 +1436,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": -1651.8715599200045,
-			"y": 2602.1926059936873,
+			"x": -1674.9512034092752,
+			"y": 2752.7613944880895,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -1462,8 +1462,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 1525.0569158122958,
-			"y": 1584.6803804599572,
+			"x": 1501.977272323025,
+			"y": 1735.2491689543594,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -1488,8 +1488,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 1315.0569158122958,
-			"y": 1584.6803804599572,
+			"x": 1291.977272323025,
+			"y": 1735.2491689543594,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -1514,8 +1514,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 1301.9367048436577,
-			"y": 2044.1423877478737,
+			"x": 1278.857061354387,
+			"y": 2194.711176242276,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -1566,8 +1566,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 649.4841302005204,
-			"y": 2291.60337483822,
+			"x": 626.4044867112498,
+			"y": 2442.1721633326224,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -1618,8 +1618,8 @@
 			"typeName": "binding"
 		},
 		{
-			"x": 1499.1636988691366,
-			"y": 2090.168837069863,
+			"x": 1476.084055379866,
+			"y": 2240.7376255642653,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -1670,8 +1670,8 @@
 			"typeName": "binding"
 		},
 		{
-			"x": 329.70287503725217,
-			"y": 54.8357799694968,
+			"x": 316.3516561547767,
+			"y": 52.50234352837106,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -2034,8 +2034,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 3288.254489940226,
-			"y": 614.4486670180481,
+			"x": 2812.146561014927,
+			"y": 683.8212949732815,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -2046,7 +2046,7 @@
 				"color": "black",
 				"size": "m",
 				"w": 1314.6630749047222,
-				"text": "{\n  \"messages\": [\n    {\"user\": \"Расскажите о вашем опыте работы с Java. На каких проектах вы участвовали в последнее время?\"},\n    {\"assistant\": \"Я работаю с Java более 5 лет. В последнем проекте разрабатывал микросервисную архитектуру для FinTech-платформы с использованием Spring Boot и Kafka. Реализовывал модуль обработки транзакций с гарантией доставки сообщений и отказоустойчивостью.\"},\n    \n    {\"user\": \"Как вы обеспечиваете потокобезопасность в Java-приложениях?\"},\n    {\"assistant\": \"Использую synchronized-блоки, атомарные классы из java.util.concurrent и неблокирующие структуры данных. В последнем проекте применял ReentrantLock для управления доступом к shared resource в высоконагруженном сервисе.\"},\n    \n    {\"user\": \"Опишите ваш опыт работы с Spring Framework\"},\n    {\"assistant\": \"Разрабатывал RESTful API на Spring MVC и Spring Data JPA. Интегрировал Spring Security с JWT-аутентификацией. Для конфигурации использовал Spring Profiles, для тестирования — Spring Boot Test с MockMVC.\"},\n    \n    {\"user\": \"Как вы подходите к проектированию архитектуры нового приложения?\"},\n    {\"assistant\": \"Начинаю с анализа требований и выбора подходящего шаблона (микросервисы/monolith). Провожу декомпозицию на модули, определяю границы контекстов. Использую диаграммы последовательностей и C4-модель для документирования.\"},\n    \n    {\"user\": \"Приведите пример сложной технической проблемы, которую вам пришлось решать\"},\n    {\"assistant\": \"Оптимизировал запрос к PostgreSQL, работающий с 10+ млн записей. Путем анализа explain-плана добавил покрывающие индексы, переработал логику пейджинации. Это сократило время выполнения с 2.5 сек до 120 мс.\"},\n    \n    {\"user\": \"Как вы работаете с базами данных в Java-приложениях?\"},\n    {\"assistant\": \"Использую Hibernate для ORM, пишу native SQL для сложных запросов. Применяю Flyway для миграций. Для оптимизации: кэширование через Redis, batch-обработку и стратегии загрузки LAZY/FETCH.\"},\n    \n    {\"user\": \"Опишите ваш процесс тестирования кода\"},\n    {\"assistant\": \"Пишу unit-тесты с JUnit 5 и Mockito, интеграционные тесты с Testcontainers. В CI/CD пайплайне запускаю JaCoCo для проверки покрытия. Для E2E-тестов использую Selenium и RestAssured.\"},\n    \n    {\"user\": \"Как вы настраиваете CI/CD для Java-проектов?\"},\n    {\"assistant\": \"Настраиваю пайплайны в Jenkins/GitLab CI: сборку через Maven/Gradle, статический анализ (SonarQube), деплой в Docker-контейнерах на Kubernetes. Для артефактов использую Nexus Repository.\"},\n    \n    {\"user\": \"Как вы следите за развитием Java-экосистемы?\"},\n    {\"assistant\": \"Читаю релизные notes JDK, участвую в Java User Groups. Экспериментирую с новыми фичами: недавно внедрил виртуальные потоки из Java 21 для оптимизации асинхронных задач.\"},\n    \n    {\"user\": \"Какие направления в Java-разработке вам наиболее интересны?\"},\n    {\"assistant\": \"Углубляюсь в облачные Native-приложения (Quarkus), распределенные системы (Apache Pulsar), и machine learning интеграции (Deeplearning4j). Планирую изучить Project Loom для улучшения конкурентности.\"}\n  ]\n}",
+				"text": "{\n  \"messages\": [\n    {\"role\": \"user\", \"content\": \"Расскажите о вашем опыте работы с Java. На каких проектах вы участвовали в последнее время?\"},\n    {\"role\": \"assistant\", \"content\": \"Я работаю с Java более 5 лет. В последнем проекте разрабатывал микросервисную архитектуру для FinTech-платформы с использованием Spring Boot и Kafka. Реализовывал модуль обработки транзакций с гарантией доставки сообщений и отказоустойчивостью.\"},\n    \n    {\"role\": \"user\", \"content\": \"Как вы обеспечиваете потокобезопасность в Java-приложениях?\"},\n    {\"role\": \"assistant\", \"content\": \"Использую synchronized-блоки, атомарные классы из java.util.concurrent и неблокирующие структуры данных. В последнем проекте применял ReentrantLock для управления доступом к shared resource в высоконагруженном сервисе.\"},\n    \n    {\"role\": \"user\", \"content\": \"Опишите ваш опыт работы с Spring Framework\"},\n    {\"role\": \"assistant\", \"content\": \"Разрабатывал RESTful API на Spring MVC и Spring Data JPA. Интегрировал Spring Security с JWT-аутентификацией. Для конфигурации использовал Spring Profiles, для тестирования — Spring Boot Test с MockMVC.\"},\n    \n    {\"role\": \"user\", \"content\": \"Как вы подходите к проектированию архитектуры нового приложения?\"},\n    {\"role\": \"assistant\", \"content\": \"Начинаю с анализа требований и выбора подходящего шаблона (микросервисы/monolith). Провожу декомпозицию на модули, определяю границы контекстов. Использую диаграммы последовательностей и C4-модель для документирования.\"},\n    \n    {\"role\": \"user\", \"content\": \"Приведите пример сложной технической проблемы, которую вам пришлось решать\"},\n    {\"role\": \"assistant\", \"content\": \"Оптимизировал запрос к PostgreSQL, работающий с 10+ млн записей. Путем анализа explain-плана добавил покрывающие индексы, переработал логику пейджинации. Это сократило время выполнения с 2.5 сек до 120 мс.\"},\n    \n    {\"role\": \"user\", \"content\": \"Как вы работаете с базами данных в Java-приложениях?\"},\n    {\"role\": \"assistant\", \"content\": \"Использую Hibernate для ORM, пишу native SQL для сложных запросов. Применяю Flyway для миграций. Для оптимизации: кэширование через Redis, batch-обработку и стратегии загрузки LAZY/FETCH.\"},\n    \n    {\"role\": \"user\", \"content\": \"Опишите ваш процесс тестирования кода\"},\n    {\"role\": \"assistant\", \"content\": \"Пишу unit-тесты с JUnit 5 и Mockito, интеграционные тесты с Testcontainers. В CI/CD пайплайне запускаю JaCoCo для проверки покрытия. Для E2E-тестов использую Selenium и RestAssured.\"},\n    \n    {\"role\": \"user\", \"content\": \"Как вы настраиваете CI/CD для Java-проектов?\"},\n    {\"role\": \"assistant\", \"content\": \"Настраиваю пайплайны в Jenkins/GitLab CI: сборку через Maven/Gradle, статический анализ (SonarQube), деплой в Docker-контейнерах на Kubernetes. Для артефактов использую Nexus Repository.\"},\n    \n    {\"role\": \"user\", \"content\": \"Как вы следите за развитием Java-экосистемы?\"},\n    {\"role\": \"assistant\", \"content\": \"Читаю релизные notes JDK, участвую в Java User Groups. Экспериментирую с новыми фичами: недавно внедрил виртуальные потоки из Java 21 для оптимизации асинхронных задач.\"},\n    \n    {\"role\": \"user\", \"content\": \"Какие направления в Java-разработке вам наиболее интересны?\"},\n    {\"role\": \"assistant\", \"content\": \"Углубляюсь в облачные Native-приложения (Quarkus), распределенные системы (Apache Pulsar), и machine learning интеграции (Deeplearning4j). Планирую изучить Project Loom для улучшения конкурентности.\"}\n  ]\n}",
 				"font": "mono",
 				"textAlign": "start",
 				"autoSize": false,
@@ -2069,7 +2069,7 @@
 				"dash": "draw",
 				"size": "m",
 				"fill": "none",
-				"color": "black",
+				"color": "green",
 				"labelColor": "black",
 				"bend": 0,
 				"start": {
@@ -2303,7 +2303,7 @@
 				"dash": "draw",
 				"size": "m",
 				"fill": "none",
-				"color": "black",
+				"color": "yellow",
 				"labelColor": "black",
 				"bend": 0,
 				"start": {
@@ -2372,7 +2372,7 @@
 				"dash": "draw",
 				"size": "m",
 				"fill": "none",
-				"color": "black",
+				"color": "yellow",
 				"labelColor": "black",
 				"bend": 0,
 				"start": {
@@ -2441,7 +2441,7 @@
 				"dash": "draw",
 				"size": "m",
 				"fill": "none",
-				"color": "black",
+				"color": "yellow",
 				"labelColor": "black",
 				"bend": 0,
 				"start": {
@@ -2510,7 +2510,7 @@
 				"dash": "draw",
 				"size": "m",
 				"fill": "none",
-				"color": "black",
+				"color": "yellow",
 				"labelColor": "black",
 				"bend": 0,
 				"start": {
@@ -2613,8 +2613,8 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 1652.1080819674987,
-			"y": 670.9371179296443,
+			"x": 1550.2871077604923,
+			"y": 658.3368349971886,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -2622,8 +2622,8 @@
 			"id": "shape:EsSj5-5KBmGe2Abm86w_0",
 			"type": "frame",
 			"props": {
-				"w": 849.1595095124078,
-				"h": 761.8532829982908,
+				"w": 1139.959677441981,
+				"h": 939.7101593808753,
 				"name": "input -> json"
 			},
 			"parentId": "shape:umgdu6gyvwuk-cSBajouw",
@@ -2806,7 +2806,7 @@
 				"dash": "draw",
 				"size": "m",
 				"fill": "none",
-				"color": "black",
+				"color": "green",
 				"labelColor": "black",
 				"bend": 0,
 				"start": {
@@ -2863,8 +2863,8 @@
 			"typeName": "binding"
 		},
 		{
-			"x": -545.0683454139976,
-			"y": 5110.817816043057,
+			"x": -568.1479889032682,
+			"y": 5261.38660453746,
 			"rotation": 0,
 			"isLocked": false,
 			"opacity": 1,
@@ -3037,7 +3037,7 @@
 			"type": "arrow",
 			"props": {
 				"dash": "draw",
-				"size": "m",
+				"size": "l",
 				"fill": "none",
 				"color": "red",
 				"labelColor": "black",
@@ -3098,15 +3098,18 @@
 		{
 			"id": "pointer:pointer",
 			"typeName": "pointer",
-			"x": 3661.453644456317,
-			"y": 4340.809390534452,
-			"lastActivityTimestamp": 1739096553176,
+			"x": -192.43692649215552,
+			"y": 3146.0283388080893,
+			"lastActivityTimestamp": 1739896314434,
 			"meta": {}
 		},
 		{
 			"followingUserId": null,
 			"opacityForNextShape": 1,
-			"stylesForNextShape": {},
+			"stylesForNextShape": {
+				"tldraw:font": "mono",
+				"tldraw:size": "l"
+			},
 			"brush": null,
 			"scribbles": [],
 			"cursor": {
@@ -3120,7 +3123,7 @@
 			"screenBounds": {
 				"x": 0,
 				"y": 0,
-				"w": 2264,
+				"w": 1457,
 				"h": 1301
 			},
 			"insets": [
@@ -3149,12 +3152,12 @@
 			"typeName": "instance"
 		},
 		{
-			"editingShapeId": null,
+			"editingShapeId": "shape:pfT1P62ZZk-tYCMbY6iEO",
 			"croppingShapeId": null,
 			"selectedShapeIds": [
-				"shape:-z9KihNTuNiIGVAX-iO1H"
+				"shape:pfT1P62ZZk-tYCMbY6iEO"
 			],
-			"hoveredShapeId": "shape:-z9KihNTuNiIGVAX-iO1H",
+			"hoveredShapeId": "shape:pfT1P62ZZk-tYCMbY6iEO",
 			"erasingShapeIds": [],
 			"hintingShapeIds": [],
 			"focusedGroupId": null,
@@ -3164,12 +3167,61 @@
 			"typeName": "instance_page_state"
 		},
 		{
-			"x": 3333.6356915276224,
-			"y": -1202.7448116736575,
-			"z": 0.28452549415797335,
+			"x": 892.0699422549161,
+			"y": -2273.1137533483416,
+			"z": 1.0577978680625206,
 			"meta": {},
 			"id": "camera:page:page",
 			"typeName": "camera"
+		},
+		{
+			"x": 508.5957662701387,
+			"y": 302.3606713191823,
+			"rotation": 0,
+			"isLocked": false,
+			"opacity": 1,
+			"meta": {},
+			"id": "shape:XYIByzo4EyAvcwdesYey_",
+			"type": "text",
+			"props": {
+				"color": "black",
+				"size": "m",
+				"w": 620.2109375,
+				"text": "{\n  experience: '5 year', \n  job_position: 'Senior Python Developer', \n  team_skill: 'team player'\n}",
+				"font": "mono",
+				"textAlign": "start",
+				"autoSize": true,
+				"scale": 1
+			},
+			"parentId": "shape:EsSj5-5KBmGe2Abm86w_0",
+			"index": "a87q2",
+			"typeName": "shape"
+		},
+		{
+			"x": -1594.6654148677849,
+			"y": 1691.8940012602973,
+			"rotation": 0,
+			"isLocked": false,
+			"opacity": 1,
+			"meta": {},
+			"id": "shape:-n1jRPTJHlXeICB4Slx4v",
+			"type": "note",
+			"props": {
+				"color": "black",
+				"size": "m",
+				"text": "experience",
+				"font": "draw",
+				"align": "middle",
+				"verticalAlign": "middle",
+				"labelColor": "black",
+				"growY": 0,
+				"fontSizeAdjustment": 22,
+				"url": "",
+				"scale": 1
+			},
+			"parentId": "page:page",
+			"index": "a5dSH",
+			"typeName": "shape"
 		}
 	]
 }

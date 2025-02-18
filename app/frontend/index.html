@@ -1,177 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>chat</title>
-    <style>
-        .html, body {
-            margin: 0;
-            padding: 0;
-            font-size: 16px;
-            width: 100vw;
-            background-color: #ababab;
-        }
-        .recording { 
-            background-color: #ff0000;
-            animation: pulse 1s infinite;
-        }
-        .chat-container {
-            display: flex;
-            width: 100vw;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            font-family: Arial, sans-serif;
-        }
-        .input-container {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-        }
-        .message-text { 
-            color: #000;
-            width: 90vw; 
-        }
-        .message-voice { 
-            color: #0066cc; 
-            width: 90vw;
-        }
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-        .user-message {
-            color: #2c3e50;
-            margin: 5px;
-            padding: 8px;
-            background-color: #e8f5e9;
-            border-radius: 8px;
-        }
-        
-        .agent-message {
-            color: #2c3e50;
-            margin: 5px;
-            padding: 8px;
-            background-color: #e3f2fd;
-            border-radius: 8px;
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>main page</title>
 </head>
-<body>
-    <div class="chat-container">
+<body class="bg-gray-200 min-h-screen">
+    <div class="flex flex-col items-center justify-center min-h-screen font-sans">
         <div id="messages"></div>
-        <div class="input-container">
-            <form onsubmit="sendMessage(event)">
-                <input type="text" id="messageText" autocomplete="off"/>
-                <button type="submit">Отправить текст</button>
-            </form>
-            <div class="audio-controls">
-                <button id="recordButton" onclick="toggleRecording()">Записать голос</button>
-                <span id="recordingStatus"></span>
-            </div>
+        <div class="flex space-x-8">
+            <a href="/select-persona" class="w-40 h-40 flex items-center justify-center bg-blue-500 text-white font-semibold transition-colors rounded hover:bg-white hover:text-blue-500 border-2 border-blue-500">
+                Start </br> interview
+            </a>
+            <a href="/evaluation" class="w-40 h-40 flex items-center justify-center bg-green-500 text-white font-semibold transition-colors rounded hover:bg-white hover:text-green-500 border-2 border-green-500">
+                Evaluate </br> interview
+            </a>
         </div>
     </div>
-    
-    <script>
-        const wsText = new WebSocket("ws://localhost:8000/ws/text");
-        const wsVoice = new WebSocket("ws://localhost:8000/ws/voice");
-        let mediaRecorder;
-        let audioChunks = [];
-        let isRecording = false;
-
-        wsText.onmessage = function(event) {
-            const response = JSON.parse(event.data);
-            addMessageToChat(response.user_input_text, 'user_input_text');
-            addMessageToChat(response.agent_response_text, 'agent_response_text');
-        };
-
-        wsVoice.onmessage = function(event) {
-            const response = JSON.parse(event.data);
-            
-            // Добавляем текст пользователя
-            addMessageToChat(response.user_input_text, 'user_input_text');
-            
-            // Добавляем ответ агента
-            addMessageToChat(response.agent_response_text, 'agent_response_text');
-            
-            // Воспроизводим полученное аудио
-            const audio = new Audio();
-            audio.src = 'data:audio/mp3;base64,' + response.agent_response_audio;
-            audio.play().catch(e => console.error('wsVoice:', e));
-        };
-
-        function addMessageToChat(text, type) {
-            const messages = document.getElementById('messages');
-            const message = document.createElement('div');
-            
-            if (type === 'user_input_text') 
-            {
-                message.textContent = '［👤］: ' + text;
-                message.className = 'message-text user-message';
-            } 
-            else if (type === 'agent_response_text') 
-            {
-                message.textContent = '［🤖］: ' + text;
-                message.className = 'message-text agent-message';
-            }
-            
-            messages.appendChild(message);
-            messages.scrollTop = messages.scrollHeight;
-        }
-
-        function sendMessage(event) {
-            event.preventDefault();
-            const input = document.getElementById("messageText");
-            wsText.send(input.value);
-            input.value = '';
-        }
-
-        async function toggleRecording() {
-            const recordButton = document.getElementById('recordButton');
-            const statusElement = document.getElementById('recordingStatus');
-
-            if (!isRecording) {
-                try {
-                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                    mediaRecorder = new MediaRecorder(stream);
-                    audioChunks = [];
-
-                    mediaRecorder.ondataavailable = (event) => {
-                        audioChunks.push(event.data);
-                    };
-
-                    mediaRecorder.onstop = async () => {
-                        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-                        const reader = new FileReader();
-                        reader.readAsDataURL(audioBlob);
-                        reader.onloadend = () => {
-                            const base64Audio = reader.result.split(',')[1];
-                            wsVoice.send(base64Audio);
-                        };
-                    };
-
-                    mediaRecorder.start();
-                    isRecording = true;
-                    recordButton.textContent = 'Stop';
-                    recordButton.classList.add('recording');
-                    // statusElement.textContent = 'Recording...';
-
-                } catch (err) {
-                    console.error('Record:', err);
-                    statusElement.textContent = 'Error mic access';
-                }
-            } else {
-                mediaRecorder.stop();
-                isRecording = false;
-                recordButton.textContent = 'Записать голос';
-                recordButton.classList.remove('recording');
-                // statusElement.textContent = 'Stopped';
-                mediaRecorder.stream.getTracks().forEach(track => track.stop());
-            }
-        }
-    </script>
 </body>
 </html>

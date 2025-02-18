@@ -16,21 +16,21 @@ tts = TTS()
 index_html = Jinja2Templates(directory="app/frontend")
 
 # Роут для отображения HTML страницы
-@app.get("/", 
-        summary="Web-page",
-        description="""
-        Chatbot with text and voice chat.
-        
-        For text chat, use /ws/text WebSocket.
-        For voice chat, use /ws/voice WebSocket.
-        """)
-async def get_chat_page(request: Request):
-    return index_html.TemplateResponse(
-        "index.html", 
-        {
-            "request": request
-        }
-    )
+@app.get("/", response_class=HTMLResponse)
+async def index_page(request: Request):
+    return index_html.TemplateResponse("index.html", {"request": request})
+
+@app.get("/select-persona", response_class=HTMLResponse)
+async def select_persona_page(request: Request):
+    return index_html.TemplateResponse("select-persona.html", {"request": request})
+
+@app.get("/interview", response_class=HTMLResponse)
+async def interview_page(request: Request):
+    return index_html.TemplateResponse("interview.html", {"request": request})
+
+@app.get("/evaluation", response_class=HTMLResponse)
+async def evaluation_page(request: Request):
+    return index_html.TemplateResponse("evaluation.html", {"request": request})
 
 # WebSocket текста
 @app.websocket("/ws/text")
