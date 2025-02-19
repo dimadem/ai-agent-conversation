@@ -115,8 +115,7 @@ async def select_persona_endpoint(request: Request):
     pp(f"=== Select persona endpoint ===")
     data = await request.json()
     pp(data)
-    available_personas = ["Persona1", "Persona2", "Persona3"]
-    return {"message": "Select persona endpoint", "personas": available_personas}
+    return data
 
 @app.post("/api/interview")
 async def interview_endpoint(request: Request):
