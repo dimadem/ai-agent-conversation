@@ -1,9 +1,9 @@
 from pathlib import Path
-from app.core.openai import client
+from app.core.yandex import sdk
 
 class TTS:
     def __init__(self, model: str = "tts-1", voice: str = "alloy"):
-        self.client = client
+        self.client = sdk
         self.model = model
         self.voice = voice
 

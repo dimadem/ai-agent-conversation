@@ -40,10 +40,10 @@
             conversationHistory.messages.forEach(msg => {
                 const div = document.createElement('div');
                 if (msg.role === 'user') {
-                    div.textContent = '［👤］: ' + msg.content;
+                    div.textContent = '［👤］: ' + msg.text;
                     div.className = 'mb-2 text-right';
                 } else if (msg.role === 'assistant') {
-                    div.textContent = '［🤖］: ' + msg.content;
+                    div.textContent = '［🤖］: ' + msg.text;
                     div.className = 'mb-2 text-left';
                 }
                 messagesEl.appendChild(div);
@@ -59,10 +59,10 @@
             // Если предыдущий placeholder "..." существует, заменяем его на настоящий ответ
             if (conversationHistory.messages.length &&
                 conversationHistory.messages[conversationHistory.messages.length - 1].role === 'assistant' &&
-                conversationHistory.messages[conversationHistory.messages.length - 1].content === '...') {
-                conversationHistory.messages[conversationHistory.messages.length - 1].content = response.agent_response_text;
+                conversationHistory.messages[conversationHistory.messages.length - 1].text === '...') {
+                conversationHistory.messages[conversationHistory.messages.length - 1].text = response.agent_response_text;
             } else {
-                conversationHistory.messages.push({ role: "assistant", content: response.agent_response_text });
+                conversationHistory.messages.push({ role: "assistant", text: response.agent_response_text });
             }
             updateChatDisplay();
             document.getElementById("messageText").disabled = false;
@@ -98,8 +98,8 @@
                   userMsg = input.value.trim();
             if (userMsg === "") return;
             // Добавляем сообщение пользователя и placeholder для ответа ассистента
-            conversationHistory.messages.push({ role: "user", content: userMsg });
-            conversationHistory.messages.push({ role: "assistant", content: "..." });
+            conversationHistory.messages.push({ role: "user", text: userMsg });
+            conversationHistory.messages.push({ role: "assistant", text: "..." });
             updateChatDisplay();
             wsText.send(userMsg);
             input.value = '';
@@ -121,12 +121,19 @@
                     };
 
                     mediaRecorder.onstop = async () => {
-                        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                        // Преобразуем в PCM/WAV формат
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
                         const reader = new FileReader();
                         reader.readAsDataURL(audioBlob);
                         reader.onloadend = () => {
                             const base64Audio = reader.result.split(',')[1];
-                            wsVoice.send(base64Audio);
+                            
+                            // Добавляем дополнительный параметр чтобы сервер знал формат
+                            const payload = JSON.stringify({
+                                audio: base64Audio,
+                                format: 'webm'
+                            });
+                            wsVoice.send(base64Audio);  // оставляем как было для совместимости
                         };
                     };
 

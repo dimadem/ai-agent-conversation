@@ -1,3 +1,5 @@
+research/*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -164,3 +166,5 @@ cython_debug/
 /local_materials
 .env
 temp_audio.wav
+.aider*
+aider.sh
