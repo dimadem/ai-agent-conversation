@@ -1,5 +1,4 @@
 fastapi[standard]
 uvicorn
 python-dotenv
-yandex-cloud-ml-sdk
-grpcio-tools
+openai

@@ -1,31 +1,31 @@
-from typing import Dict, List, Union
-from app.core.yandex import sdk
-from app.core.config import YANDEX_FOLDER_ID
+from typing import List, Dict
+from app.core.openai import client
+
 
 class TTT:
-    def __init__(self, model: str = f"gpt://{YANDEX_FOLDER_ID}/yandexgpt/rc"):
-        self.sdk = sdk
+    def __init__(self, model: str = "gpt-4o-mini"):
+        self.client = client
         self.model = model
 
-    def generate_response(self, messages: Union[Dict, List[Dict]]) -> str:
+    def generate_response(self, messages: List[Dict[str, str]]) -> str:
         """
-        Generate text response using Yandex API
+        Generate text response
         """
         try:
-            if not isinstance(messages, list):
-                messages = [messages]
-            
-            completion = self.sdk.models.completions(self.model).configure(temperature=0.0, reasoning_mode='DISABLED').run(messages)
-            print(completion)
-            return completion[0].text
+            completion = self.client.chat.completions.create(
+                model=self.model,
+                messages=messages
+            )
+            return completion.choices[0].message.content
+
         except Exception as e:
             return f"Error generating response: {str(e)}"
 
-    def create_message(self, role: str, text: str) -> Dict[str, str]:
+    def create_chat_message(self, role: str, content: str) -> Dict[str, str]:
         """
-        Create chat message in Yandex API format
+        Create chat message with role and content
         """
         return {
             "role": role,
-            "text": text
+            "content": content
         }

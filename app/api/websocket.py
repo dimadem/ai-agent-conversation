@@ -5,8 +5,6 @@ from app.model.stt import STT
 from app.model.tts import TTS
 from app.core.constants import TEMP_AUDIO_FILE
 import logging
-import os
-from typing import Dict, Any
 
 logger = logging.getLogger(__name__)
 
