@@ -1,4 +1,9 @@
 from app.model.ttt import TTT
+from app.prompts.utils import load_prompts
+
+
+prompts = load_prompts("persona_system_prompt.yaml")
+
 
 ttt = TTT()
 

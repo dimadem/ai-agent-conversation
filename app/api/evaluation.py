@@ -13,7 +13,7 @@ async def evaluate_endpoint(request: Request):
     pp(f"=== Evaluation endpoint ===")
     data = await request.json()
     messages = data.get("messages")
-    response = extract_star_components(messages)
+    response = extract_star_components(messages) # Вызов функции для извлечения компонентов STAR
     pp(f"=== Evaluation endpoint response ===")
     print(response)
     # Сохраняем результат для использования на странице отчета

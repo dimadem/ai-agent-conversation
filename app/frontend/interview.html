@@ -8,7 +8,20 @@
 </head>
 <body class="flex flex-col justify-center items-center bg-gray-200 min-h-screen font-sans">
     <div class="bg-white shadow mt-6 p-6 rounded w-full max-w-4xl">
-        <div id="messages" class="mb-4 p-4 border h-96 overflow-y-auto"></div>
+        <div class="mb-4 p-2 bg-gray-50 rounded">
+            <h2 class="text-lg font-semibold mb-2">Текущая сессия интервью</h2>
+            <div class="flex gap-4">
+                <div class="flex-1">
+                    <p class="text-sm font-medium text-gray-700">Профиль кандидата:</p>
+                    <p id="personaDisplay" class="mt-1 text-sm">{{ persona if persona else "Not specified" }}</p>
+                </div>
+                <div class="flex-1">
+                    <p class="text-sm font-medium text-gray-700">Оцениваемый навык:</p>
+                    <p id="skillDisplay" class="mt-1 text-sm">{{ skill if skill else "Not specified" }}</p>
+                </div>
+            </div>
+        </div>
+        <div id="messages" class="mb-4 p-4 border h-80 overflow-y-auto"></div>
         <form onsubmit="sendMessage(event)" class="flex space-x-2">
             <input type="text" id="messageText" placeholder="Type a message" class="flex-grow p-2 border rounded">
             <button type="submit" class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded text-white">
@@ -16,16 +29,9 @@
             </button>
         </form>
         <div class="flex justify-between space-x-2 mt-4">
-            <button class="bg-red-600 text-white">
+            <button id="endInterviewBtn" onclick="endInterview()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded">
                 Завершить интервью
             </button>
-            <!-- 
-            todo:
-            1. Когда нажимается кнопка закончить интервью
-            2. Сохранить интервью в файловую систему
-            3. если да, сохраня json в файловую систему
-            4. если нет, то просто закрыть окно
-            -->
             <span id="recordingStatus" class="text-gray-600"></span>
             <button id="recordButton" onclick="toggleRecording()" class="bg-blue-600 hover:bg-red-600 px-4 py-2 rounded text-white">
                 Записать голос
@@ -34,14 +40,25 @@
     </div>
     
     <script>
-        const wsText = new WebSocket("ws://localhost:8000/ws/text");
-        const wsVoice = new WebSocket("ws://localhost:8000/ws/voice");
+        // Read persona and skill from the page, passed by the server
+        let currentPersona = "{{ persona if persona else 'Junior Python Developer' }}";
+        let currentSkill = "{{ skill if skill else 'Python programming' }}";
+        
+        // Create websocket URL with query parameters
+        const baseWsUrl = window.location.hostname === 'localhost' ? 'ws://localhost:8000' : `ws://${window.location.host}`;
+        // Единый WebSocket для всех типов взаимодействий
+        const ws = new WebSocket(`${baseWsUrl}/ws/interview?persona=${encodeURIComponent(currentPersona)}&skill=${encodeURIComponent(currentSkill)}`);
+        
         let mediaRecorder;
         let audioChunks = [];
         let isRecording = false;
 
         // Добавление глобальной истории сообщений
         var conversationHistory = { messages: [] };
+
+        // Set the persona and skill display
+        document.getElementById('personaDisplay').textContent = currentPersona;
+        document.getElementById('skillDisplay').textContent = currentSkill;
 
         // Функция обновления отображения истории сообщений
         function updateChatDisplay() {
@@ -59,48 +76,40 @@
                 messagesEl.appendChild(div);
             });
             messagesEl.scrollTop = messagesEl.scrollHeight;
-
-
-            console.log('conversationHistory:', conversationHistory);
         }
 
-        wsText.onmessage = function(event) {
+        ws.onmessage = function(event) {
             const response = JSON.parse(event.data);
-            // Если предыдущий placeholder "..." существует, заменяем его на настоящий ответ
-            if (conversationHistory.messages.length &&
-                conversationHistory.messages[conversationHistory.messages.length - 1].role === 'assistant' &&
-                conversationHistory.messages[conversationHistory.messages.length - 1].text === '...') {
-                conversationHistory.messages[conversationHistory.messages.length - 1].text = response.agent_response_text;
-            } else {
-                conversationHistory.messages.push({ role: "assistant", text: response.agent_response_text });
+            
+            // Обработка ответа в зависимости от типа
+            if (response.type === 'text') {
+                // Если предыдущий placeholder "..." существует, заменяем его на настоящий ответ
+                if (conversationHistory.messages.length &&
+                    conversationHistory.messages[conversationHistory.messages.length - 1].role === 'assistant' &&
+                    conversationHistory.messages[conversationHistory.messages.length - 1].text === '...') {
+                    conversationHistory.messages[conversationHistory.messages.length - 1].text = response.text;
+                } else {
+                    conversationHistory.messages.push({ role: "assistant", text: response.text });
+                }
+                document.getElementById("messageText").disabled = false;
+                document.getElementById("messageText").focus();
+            } else if (response.type === 'voice') {
+                // Для голосовых сообщений добавляем распознанный текст пользователя
+                if (response.user_text) {
+                    conversationHistory.messages.push({ role: "user", text: response.user_text });
+                }
+                conversationHistory.messages.push({ role: "assistant", text: response.text });
+                
+                // Воспроизведение аудио
+                if (response.audio) {
+                    const audio = new Audio();
+                    audio.src = 'data:audio/mp3;base64,' + response.audio;
+                    audio.play().catch(e => console.error('Voice playback error:', e));
+                }
             }
+            
             updateChatDisplay();
-            document.getElementById("messageText").disabled = false;
-            document.getElementById("messageText").focus();
         };
-
-        wsVoice.onmessage = function(event) {
-            const response = JSON.parse(event.data);
-            addMessageToChat(response.user_input_text, 'user_input_text');
-            addMessageToChat(response.agent_response_text, 'agent_response_text');
-            const audio = new Audio();
-            audio.src = 'data:audio/mp3;base64,' + response.agent_response_audio;
-            audio.play().catch(e => console.error('wsVoice:', e));
-        };
-
-        function addMessageToChat(text, type) {
-            const messages = document.getElementById('messages');
-            const message = document.createElement('div');
-            if (type === 'user_input_text') {
-                message.textContent = '［👤］: ' + text;
-                message.className = 'mb-2 text-right';
-            } else if (type === 'agent_response_text') {
-                message.textContent = '［🤖］: ' + text;
-                message.className = 'mb-2 text-left';
-            }
-            messages.appendChild(message);
-            messages.scrollTop = messages.scrollHeight;
-        }
 
         function sendMessage(event) {
             event.preventDefault();
@@ -111,9 +120,39 @@
             conversationHistory.messages.push({ role: "user", text: userMsg });
             conversationHistory.messages.push({ role: "assistant", text: "..." });
             updateChatDisplay();
-            wsText.send(userMsg);
+            
+            // Отправляем сообщение в формате JSON
+            const messageData = {
+                message: userMsg
+            };
+            ws.send(JSON.stringify(messageData));
+            
             input.value = '';
             input.disabled = true;
+        }
+
+        function endInterview() {
+            if (confirm("Завершить интервью и сохранить результаты?")) {
+                // Send the conversation history to the server
+                fetch("/api/interview", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        persona: currentPersona,
+                        skill: currentSkill,
+                        conversation: conversationHistory.messages
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert("Интервью завершено и сохранено");
+                    window.location.href = "/evaluation";
+                })
+                .catch(error => {
+                    console.error("Error saving interview:", error);
+                    alert("Произошла ошибка при сохранении интервью");
+                });
+            }
         }
 
         async function toggleRecording() {
@@ -138,12 +177,12 @@
                         reader.onloadend = () => {
                             const base64Audio = reader.result.split(',')[1];
                             
-                            // Добавляем дополнительный параметр чтобы сервер знал формат
+                            // Отправляем только аудио и формат
                             const payload = JSON.stringify({
                                 audio: base64Audio,
                                 format: 'webm'
                             });
-                            wsVoice.send(base64Audio);  // оставляем как было для совместимости
+                            ws.send(payload);
                         };
                     };
 
