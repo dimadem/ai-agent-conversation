@@ -4,38 +4,34 @@
 	<!-- ...existing head code... -->
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Select Persona</title>
+	<title>Профиль Кандидата</title>
 	<script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-200 min-h-screen flex flex-col items-center justify-center font-sans">
 	<div class="w-full max-w-md p-6 bg-white rounded shadow">
-		<h1 class="text-2xl font-bold mb-4 text-center">Select Interview Persona</h1>
+		<h1 class="text-2xl font-bold mb-4 text-center">Опишите профиль кандидата</h1>
 		<form id="persona-form" class="space-y-4">
 			<div>
-				<label for="experience" class="block mb-1">Experience:</label>
-				<input type="text" id="experience" name="experience" required class="w-full p-2 border rounded">
+				<label for="persona-profile" class="block mb-1">Профиль:</label>
+				<input type="text" id="persona-profile" name="persona-profile" required class="w-full p-2 border rounded">
 			</div>
 			<div>
-				<label for="job-position" class="block mb-1">Job Position:</label>
-				<input type="text" id="job-position" name="job-position" required class="w-full p-2 border rounded">
-			</div>
-			<div>
-				<label for="team-skill" class="block mb-1">Team Skill:</label>
-				<input type="text" id="team-skill" name="team-skill" required class="w-full p-2 border rounded">
+				<label for="persona-skill" class="block mb-1">Навык, который требуется оценить:</label>
+				<input type="text" id="persona-skill" name="persona-skill" required class="w-full p-2 border rounded">
 			</div>
 			<button type="submit" class="w-full py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600">
-				Run Interview
+				Перейти к интервью
 			</button>
 		</form>
 	</div>
 	<script>
-		document.getElementById('persona-form').addEventListener('submit', function(event) {
+		document.getElementById('persona-form').addEventListener('submit', function(event) 
+		{
 			event.preventDefault();
-			const experience = document.getElementById('experience').value.trim();
-			const job_position = document.getElementById('job-position').value.trim();
-			const team_skill = document.getElementById('team-skill').value.trim();
+			const persona_profile = document.getElementById('persona-profile').value.trim();
+			const persona_skill = document.getElementById('persona-skill').value.trim();
 			
-			const data = { experience, job_position, team_skill };
+			const data = { persona_profile, persona_skill };
             
 			// Замените URL на актуальный endpoint вашего backend-а
 			fetch("/api/select-persona", {
@@ -52,8 +48,7 @@
 			})
 			.then(result => {
 				console.log("Success:", result);
-                // Handle the result (e.g., redirect to interview page with selected persona)
-                window.location.href = "/interview"; // Example redirect
+                window.location.href = "/interview"; 
 			})
 			.catch(error => {
                 

@@ -7,10 +7,17 @@ from app.model.tts import TTS
 from pprint import pp
 import base64
 
+from app.prompts.utils import load_prompts
 
 
+from app.api.evaluation import router as evaluation_router
+
+prompts = load_prompts("persona_system_prompt.yaml")
 
 app = FastAPI()
+
+app.include_router(evaluation_router)
+
 ttt = TTT()
 stt = STT()
 tts = TTS()
@@ -25,7 +32,7 @@ async def index_page(request: Request):
 
 @app.get("/select-persona", response_class=HTMLResponse)
 async def select_persona_page(request: Request):
-    return index_html.TemplateResponse("select-persona.html", {"request": request})
+    return index_html.TemplateResponse("select-candidate.html", {"request": request})
 
 @app.get("/interview", response_class=HTMLResponse)
 async def interview_page(request: Request):
@@ -34,6 +41,10 @@ async def interview_page(request: Request):
 @app.get("/evaluation", response_class=HTMLResponse)
 async def evaluation_page(request: Request):
     return index_html.TemplateResponse("evaluation.html", {"request": request})
+
+@app.get("/report", response_class=HTMLResponse)
+async def report_page(request: Request):
+    return index_html.TemplateResponse("report.html", {"request": request})
 
 # WebSocket текста
 @app.websocket("/ws/text")
@@ -45,11 +56,13 @@ async def websocket_endpoint(ws: WebSocket):
             user_input = await ws.receive_text()
             pp(f"user_input: {user_input}")
 
+            persona_developer_message = ttt.create_chat_message("developer", prompts["persona_system_prompt"])
+
             # Создаем сообщение для TTT
-            message = ttt.create_chat_message("user", user_input)
+            user_message = ttt.create_chat_message("user", user_input)
 
             # Генерируем ответ через TTT
-            agent_response = ttt.generate_response([message])
+            agent_response = generate_interviewee_response([persona_developer_message, user_message])
             pp(f"agent_response: {agent_response}")
 
             # Отправляем ответ пользоват
@@ -81,10 +94,12 @@ async def websocket_voice(ws: WebSocket):
             # Транскрибируем с помощью Whisper
             user_input = stt.transcribe_from_path("temp_audio.wav")
             pp(f"user_input: {user_input}")
+            persona_developer_message = ttt.create_chat_message("developer", prompts["persona_system_prompt"])
+
             # Создаем сообщение для TTT
             chat_message = ttt.create_chat_message("user", user_input)
             # Генерируем ответ через TTT
-            agent_response_text = ttt.generate_response([chat_message])
+            agent_response_text = ttt.generate_response([persona_developer_message, chat_message])
             pp(f"agent_response_text: {agent_response_text}")
 
             # Генерируем ответ через TTS
@@ -103,15 +118,6 @@ async def websocket_voice(ws: WebSocket):
             )
     except WebSocketDisconnect:
         pass
-
-
-@app.post("/api/evaluation")
-async def evaluate_endpoint(request: Request):
-    pp(f"=== Evaluation endpoint ===")
-    data = await request.json()
-    pp(data)
-
-    return "Evaluation endpoint"
 
 @app.post("/api/select-persona")
 async def select_persona_endpoint(request: Request):

@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evaluation</title>
+    <title>Оценка интервью</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-200 min-h-screen flex items-center justify-center font-sans">
-    <div class="w-full max-w-md p-6 bg-white rounded shadow">
-        <h1 class="text-2xl font-bold mb-4 text-center">Evaluation</h1>
-        <p class="mb-4 text-center">Welcome to the evaluation page. Please provide your JSON data below:</p>
+<body class="flex justify-center items-center bg-gray-200 min-h-screen font-sans">
+    <div class="bg-white shadow p-6 rounded w-full max-w-md">
+        <h1 class="mb-4 font-bold text-2xl text-center">Оценка интервью</h1>
+        <p class="mb-4 text-center">Оценка интерьвю методом STAR:</p>
         <form id="evaluationForm" action="/submit-evaluation" method="post" class="space-y-4">
             <div>
                 <label for="json-input" class="block mb-1">JSON Data:</label>
-                <textarea id="json-input" name="json-data" rows="10" cols="50" class="w-full p-2 border rounded"></textarea>
+                <textarea id="json-input" name="json-data" rows="10" cols="50" class="p-2 border rounded w-full"></textarea>
             </div>
             <div class="text-center">
-                <input type="submit" value="Submit" class="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600">
+                <input type="submit" value="Submit" class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded text-white">
             </div>
         </form>
     </div>
@@ -35,7 +35,8 @@
             })
             .then(response => response.json())
             .then(data => {
-                alert('Success!');
+                // Просто перенаправляем на страницу отчета
+                window.location.href = '/report';
                 document.getElementById('evaluationForm').reset();
             })
             .catch(error => {

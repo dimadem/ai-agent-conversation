@@ -3,23 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interview Page</title>
+    <title>Интервью</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-200 min-h-screen flex flex-col items-center justify-center font-sans">
-    <div class="w-full max-w-4xl p-6 bg-white rounded shadow mt-6">
-        <div id="messages" class="mb-4 h-96 overflow-y-auto border p-4"></div>
+<body class="flex flex-col justify-center items-center bg-gray-200 min-h-screen font-sans">
+    <div class="bg-white shadow mt-6 p-6 rounded w-full max-w-4xl">
+        <div id="messages" class="mb-4 p-4 border h-96 overflow-y-auto"></div>
         <form onsubmit="sendMessage(event)" class="flex space-x-2">
-            <input type="text" id="messageText" placeholder="Type a message" class="flex-grow border rounded p-2">
-            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
-                Send
+            <input type="text" id="messageText" placeholder="Type a message" class="flex-grow p-2 border rounded">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded text-white">
+                отправить
             </button>
         </form>
-        <div class="mt-4 flex items-center space-x-2">
-            <button id="recordButton" onclick="toggleRecording()" class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded">
-                Record Voice
+        <div class="flex justify-between space-x-2 mt-4">
+            <button class="bg-red-600 text-white">
+                Завершить интервью
             </button>
+            <!-- 
+            todo:
+            1. Когда нажимается кнопка закончить интервью
+            2. Сохранить интервью в файловую систему
+            3. если да, сохраня json в файловую систему
+            4. если нет, то просто закрыть окно
+            -->
             <span id="recordingStatus" class="text-gray-600"></span>
+            <button id="recordButton" onclick="toggleRecording()" class="bg-blue-600 hover:bg-red-600 px-4 py-2 rounded text-white">
+                Записать голос
+            </button>
         </div>
     </div>
     

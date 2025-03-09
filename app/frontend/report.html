@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STAR Evaluation Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex justify-center items-center bg-gray-200 min-h-screen font-sans">
+    <div class="bg-white shadow p-6 rounded w-full max-w-md">
+        <h1 class="mb-4 font-bold text-2xl text-center">STAR Evaluation Report</h1>
+        
+        <div class="space-y-4">
+            <div>
+                <h2 class="font-bold">Situation</h2>
+                <p id="situation" class="p-2 border rounded">-</p>
+            </div>
+            
+            <div>
+                <h2 class="font-bold">Task</h2>
+                <p id="task" class="p-2 border rounded">-</p>
+            </div>
+            
+            <div>
+                <h2 class="font-bold">Action</h2>
+                <p id="action" class="p-2 border rounded">-</p>
+            </div>
+            
+            <div>
+                <h2 class="font-bold">Result</h2>
+                <p id="result" class="p-2 border rounded">-</p>
+            </div>
+        </div>
+        
+        <div class="mt-6 text-center">
+            <a href="/evaluation" class="inline-block bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded text-white">Back to Evaluation</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Получаем данные напрямую с сервера
+            fetch('/api/evaluation/result')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('situation').textContent = data.Situation || "-";
+                    document.getElementById('task').textContent = data.Task || "-";
+                    document.getElementById('action').textContent = data.Action || "-";
+                    document.getElementById('result').textContent = data.Result || "-";
+                })
+                .catch(error => {
+                    console.error('Ошибка при загрузке данных:', error);
+                });
+        });
+    </script>
+</body>
+</html>
