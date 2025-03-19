@@ -121,28 +121,20 @@
             try {
                 console.log('Raw WebSocket data:', event.data);
                 const response = JSON.parse(event.data);
-                
+
                 if (response.type === 'error') {
                     console.error('Server error:', response.text);
                     showError(`Ошибка: ${response.text}`);
                     resetWaitingState();
                     return;
                 }
-                
+
                 console.log('WebSocket message received:', response.type, response);
-                
-                // Обработка сообщения в зависимости от наличия истории
-                if (response.history) {
-                    processMessageWithHistory(response);
-                } else if ((response.type === 'text' || response.type === 'voice')) {
-                    console.log('Message without history received, handling manually');
+
+                if (['text', 'voice'].includes(response.type)) {
+                    console.log('Processing message');
                     processMessage(response);
-                }
-                
-                // Обновляем UI
-                updateChatDisplay();
-                
-                if (response.type === 'text' || response.type === 'voice') {
+                    updateChatDisplay();
                     hideStatusMessage();
                     resetWaitingState();
                 }
@@ -150,29 +142,6 @@
                 console.error('Error parsing message:', error);
                 showError('Ошибка обработки сообщения');
                 resetWaitingState();
-            }
-        }
-        
-        // Обрабатываем сообщение с историей от сервера
-        function processMessageWithHistory(response) {
-            console.log('Processing message with history');
-            
-            // Обрабатываем голосовое сообщение пользователя (если есть)
-            if (response.type === 'voice' && response.user_text) {
-                addUserMessage(response.user_text);
-            }
-            
-            // Получаем последнее сообщение от ассистента
-            const lastMessage = response.history[response.history.length - 1];
-            if (lastMessage && lastMessage.role === 'assistant') {
-                addAssistantMessage(lastMessage.content);
-            }
-            
-            // Воспроизводим аудио, если есть
-            if (response.type === 'voice' && response.audio) {
-                console.log('Playing audio response');
-                hideStatusMessage();
-                playAudio(response.audio);
             }
         }
         
@@ -241,9 +210,6 @@
             const messagesEl = document.getElementById('messages');
             messagesEl.innerHTML = "";
             
-            // Удаляем дубликаты сообщений
-            removeDuplicateMessages();
-            
             // Отображаем все сообщения
             conversationHistory.messages.forEach(msg => {
                 const div = document.createElement('div');
@@ -261,24 +227,6 @@
             
             console.log('Chat updated, message count:', conversationHistory.messages.length);
             scrollChatToBottom();
-        }
-        
-        // Удаление дубликатов сообщений
-        function removeDuplicateMessages() {
-            const uniqueMessages = [];
-            const seenMessages = new Set();
-            
-            conversationHistory.messages.forEach(msg => {
-                const key = `${msg.role}:${msg.content}`;
-                
-                if (!seenMessages.has(key)) {
-                    seenMessages.add(key);
-                    uniqueMessages.push(msg);
-                }
-            });
-            
-            // Обновляем историю сообщений без дубликатов
-            conversationHistory.messages = uniqueMessages;
         }
         
         // Прокрутка чата вниз
@@ -639,24 +587,27 @@
         // Управление состоянием интерфейса
         function enableInterface() {
             setInterfaceState(false);
-            document.getElementById('messageText').focus();
         }
         
         function disableInterface(waitingMode = false) {
-            setInterfaceState(true);
+            setInterfaceState(true, waitingMode);
         }
         
         // Установка состояния элементов интерфейса
-        function setInterfaceState(disabled) {
+        function setInterfaceState(disabled, waitingMode = false) {
             const elements = [
                 document.getElementById('messageText'),
                 document.querySelector('#chat-form button[type="submit"]'),
                 document.getElementById('recordButton')
             ];
-            
+
             elements.forEach(el => {
                 if (el) el.disabled = disabled;
             });
+
+            if (!disabled) {
+                document.getElementById('messageText').focus();
+            }
         }
         
         // Инициализация

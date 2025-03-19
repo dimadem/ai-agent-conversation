@@ -57,26 +57,48 @@
             // Проверка валидности JSON
             const jsonData = JSON.parse(jsonText);
             
-            // Проверка наличия необходимых полей
-            let messages = [];
+            // Проверка наличия всех необходимых полей
+            if (!jsonData.timestamp) {
+                showStatus('error', 'Отсутствует поле "timestamp" в JSON');
+                return;
+            }
             
-            if (jsonData.conversation && Array.isArray(jsonData.conversation)) {
-                messages = jsonData.conversation;
-            } else if (jsonData.messages && Array.isArray(jsonData.messages)) {
-                messages = jsonData.messages;
-            } else {
-                showStatus('error', 'Не найдены валидные поля "conversation" или "messages" в JSON');
+            if (!jsonData.persona) {
+                showStatus('error', 'Отсутствует поле "persona" в JSON');
+                return;
+            }
+            
+            if (!jsonData.skill) {
+                showStatus('error', 'Отсутствует поле "skill" в JSON');
+                return;
+            }
+            
+            if (!jsonData.messages || !Array.isArray(jsonData.messages)) {
+                showStatus('error', 'Отсутствует массив "messages" в JSON');
                 return;
             }
             
             // Проверка, что у нас есть хотя бы несколько сообщений
-            if (messages.length < 2) {
-                showStatus('error', 'Недостаточно сообщений для анализа');
+            if (jsonData.messages.length < 2) {
+                showStatus('error', 'Требуется минимум 2 сообщения для анализа');
                 return;
             }
             
+            // Проверка формата сообщений
+            for (const msg of jsonData.messages) {
+                if (!msg.role || !msg.content) {
+                    showStatus('error', 'Каждое сообщение должно содержать поля "role" и "content"');
+                    return;
+                }
+            }
+            
             // Подготовка данных для отправки
-            const dataToSend = { messages };
+            const dataToSend = { 
+                timestamp: jsonData.timestamp,
+                persona: jsonData.persona,
+                skill: jsonData.skill,
+                messages: jsonData.messages
+            };
             
             showStatus('info', 'Обработка данных...');
             

@@ -32,8 +32,6 @@ async def websocket_interview(ws: WebSocket,
     # Создаем агента один раз при установке соединения
     agent = create_interviewee_agent(system_prompt)
     
-    conversation_history = []
-    
     pp(f"WebSocket connected with persona: {persona}, skill: {skill}")
     
     try:
@@ -41,6 +39,7 @@ async def websocket_interview(ws: WebSocket,
             data = await ws.receive_text()
             is_audio = None
             user_input = ""
+            messages = []
 
             try:
                 json_data = json.loads(data)
@@ -58,32 +57,28 @@ async def websocket_interview(ws: WebSocket,
                         f.write(audio_bytes)
                     user_input = stt.transcribe_from_path("temp/temp_audio.wav")
                     is_audio = True
+                
+                # Получаем историю сообщений с фронтенда, если она есть
+                if 'history' in json_data and json_data['history']:
+                    # Преобразуем историю в формат, понятный агенту
+                    messages = [
+                        ttt.create_chat_message(msg["role"], msg["content"])
+                        for msg in json_data['history']
+                    ]
             except Exception as e:
                 pp(f"Error processing data: {str(e)}")
                 await ws.send_json({"type": "error", "text": f"Ошибка обработки: {str(e)}"})
                 continue
             
-
-            messages = [
-                *conversation_history,
-                ttt.create_chat_message("user", user_input)
-            ]
+            # Добавляем текущее сообщение пользователя
+            messages.append(ttt.create_chat_message("user", user_input))
             print("Messages", messages)
+            
             # Генерация ответа от агента
             response = await Runner.run(agent, messages)
             agent_text = response.final_output
             
-            # Добавляем сообщения в историю
-            conversation_history.append(ttt.create_chat_message("user", user_input))
-            conversation_history.append(ttt.create_chat_message("assistant", agent_text))
-            
-            # Подготовка истории в формате для фронтенда
-            frontend_history = [
-                {"role": msg["role"], "content": msg["content"]} 
-                for msg in conversation_history
-            ]
-
-            # Отправка ответа с обновленной историей
+            # Отправка ответа без истории, т.к. она хранится на фронтенде
             if is_audio == True:
                 # Генерация аудио ответа
                 tts_response = tts.generate_speech(agent_text)
@@ -94,15 +89,13 @@ async def websocket_interview(ws: WebSocket,
                     "type": "voice",
                     "content": agent_text,
                     "user_text": user_input,
-                    "audio": agent_audio,
-                    "history": frontend_history
+                    "audio": agent_audio
                 })
             elif is_audio == False:
                 # Отправка только текста
                 await ws.send_json({
                     "type": "text",
-                    "content": agent_text,
-                    "history": frontend_history
+                    "content": agent_text
                 })
     except WebSocketDisconnect:
         pp("WebSocket disconnected")
