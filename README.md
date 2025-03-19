@@ -1,5 +1,8 @@
 # **AI AGENT CONVERSATION**
 
+![Deploy](https://github.com/dimadem/ai-agent-conversation/actions/workflows/digitalocean-deploy.yml/badge.svg)
+
+
 #### **requirenments.txt**
 [FASTAPI](https://fastapi.tiangolo.com/)
 
