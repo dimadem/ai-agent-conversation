@@ -1,0 +1,6 @@
+fastapi[standard]
+uvicorn
+python-dotenv
+openai
+itsdangerous # Required for SessionMiddleware
+openai-agents
