@@ -19,6 +19,10 @@ jobs:
           REPO_URL: https://github.com/${{ github.repository }}.git
           APP_DIR: /opt/ai-agent-conversation
         run: |
+          # Add server to known hosts
+          mkdir -p ~/.ssh
+          ssh-keyscan -H $DROPLET_IP >> ~/.ssh/known_hosts
+      
           # Create deployment script
           cat > deploy.sh << 'EOF'
           #!/bin/bash
@@ -30,6 +34,10 @@ jobs:
           OPENAI_API_KEY=$3
           
           echo "Starting deployment process..."
+          
+          # Install required dependencies
+          apt-get update
+          apt-get install -y python3-venv python3-pip
           
           # Remove old directory if exists
           if [ -d "$APP_DIR" ]; then
